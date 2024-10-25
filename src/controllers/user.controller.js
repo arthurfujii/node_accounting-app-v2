@@ -1,75 +1,42 @@
-const {
-  getAllUsers,
-  getUserById,
-  createUser,
-  removeUser,
-  updateUser,
-} = require('../services/user.service');
+const userService = require('../services/user.service');
 
-// const userController = {
-//   getUser(req, res) {
-//     res.send(getAllUsers());
-//   },
-// };
-
-const getUsers = (req, res) => {
-  res.send(getAllUsers());
+const get = (req, res) => {
+  res.send(userService.getAll());
 };
 
-const getOneUser = (req, res) => {
-  const { id } = req.params;
-  const user = getUserById(id);
+const getOne = (req, res) => {
+  const user = req.entry;
 
-  if (!user) {
-    res.sendStatus(404);
-
-    return;
-  }
   res.send(user);
 };
 
-const postUser = (req, res) => {
+const create = (req, res) => {
   const { name } = req.body;
 
-  const user = createUser(name);
+  const user = userService.create(name);
 
   res.status(201).send(user);
 };
 
-const deleteUser = (req, res) => {
-  const { id } = req.params;
-  const user = getUserById(id);
+const remove = (req, res) => {
+  const { id } = req.entry;
 
-  if (!user) {
-    res.sendStatus(404);
-
-    return;
-  }
-
-  removeUser(id);
+  userService.remove(id);
   res.sendStatus(204);
 };
 
-const patchUser = (req, res) => {
-  const { id } = req.params;
+const update = (req, res) => {
   const { name } = req.body;
-  const user = getUserById(id);
-
-  if (!user) {
-    res.sendStatus(404);
-
-    return;
-  }
-
-  const updatedUser = updateUser({ id, name });
+  const { id } = req.entry;
+  const updatedUser = userService.update({ id, name });
 
   res.send(updatedUser);
 };
 
 module.exports = {
-  getUsers,
-  postUser,
-  getOneUser,
-  deleteUser,
-  patchUser,
+  get,
+  create,
+  getOne,
+  remove,
+  update,
 };

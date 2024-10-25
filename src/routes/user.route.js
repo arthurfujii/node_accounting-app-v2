@@ -1,22 +1,17 @@
 const express = require('express');
 const { validateFields } = require('./../middlewares/validateFields');
-const {
-  getUsers,
-  postUser,
-  getOneUser,
-  deleteUser,
-  patchUser,
-} = require('./../controllers/user.controller');
+const { validateEntry } = require('./../middlewares/validateEntry');
+const userController = require('./../controllers/user.controller');
 const router = express.Router();
 
-router.get('/', getUsers);
+router.get('/', userController.get);
 
-router.post('/', validateFields(['name']), postUser);
+router.post('/', validateFields(['name']), userController.create);
 
-router.get('/:id', getOneUser);
+router.get('/:id', validateEntry('user'), userController.getOne);
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', validateEntry('user'), userController.remove);
 
-router.patch('/:id', patchUser);
+router.patch('/:id', validateEntry('user'), userController.update);
 
 module.exports = { router };

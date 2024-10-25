@@ -1,29 +1,17 @@
-const {
-  getExpenseById,
-  getAllExpenses,
-  createExpense,
-  removeExpense,
-  updateExpense,
-} = require('../services/expense.service');
-const { getUserById } = require('../services/user.service');
+const expenseService = require('../services/expense.service');
+const { getById: getUserById } = require('../services/user.service');
 
-const getExpenses = (req, res) => {
-  res.send(getAllExpenses(req.query));
+const get = (req, res) => {
+  res.send(expenseService.getAll(req.query));
 };
 
-const getOneExpense = (req, res) => {
-  const { id } = req.params;
-  const expense = getExpenseById(id);
+const getOne = (req, res) => {
+  const expense = req.entry;
 
-  if (!expense) {
-    res.sendStatus(404);
-
-    return;
-  }
   res.send(expense);
 };
 
-const postExpense = (req, res) => {
+const create = (req, res) => {
   const {
     userId,
     spentAt = new Date(),
@@ -41,44 +29,37 @@ const postExpense = (req, res) => {
     return;
   }
 
-  const expense = createExpense(userId, spentAt, title, amount, category, note);
+  const expense = expenseService.create(
+    userId,
+    spentAt,
+    title,
+    amount,
+    category,
+    note,
+  );
 
   res.status(201).send(expense);
 };
 
-const deleteExpense = (req, res) => {
-  const { id } = req.params;
-  const expense = getExpenseById(id);
+const remove = (req, res) => {
+  const { id } = req.entry;
 
-  if (!expense) {
-    res.sendStatus(404);
-
-    return;
-  }
-
-  removeExpense(id);
+  expenseService.remove(id);
   res.sendStatus(204);
 };
 
-const patchExpense = (req, res) => {
-  const { id } = req.params;
-  const expense = getExpenseById(id);
+const update = (req, res) => {
+  const { id } = req.entry;
 
-  if (!expense) {
-    res.sendStatus(404);
-
-    return;
-  }
-
-  const updatedExpense = updateExpense(id, req.body);
+  const updatedExpense = expenseService.update(id, req.body);
 
   res.send(updatedExpense);
 };
 
 module.exports = {
-  getOneExpense,
-  getExpenses,
-  postExpense,
-  deleteExpense,
-  patchExpense,
+  getOne,
+  get,
+  create,
+  remove,
+  update,
 };

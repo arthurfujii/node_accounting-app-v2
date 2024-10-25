@@ -2,19 +2,19 @@ const { generateId } = require('../utils/generateId');
 // eslint-disable-next-line prefer-const
 let users = [];
 
-const resetUsers = function () {
+const reset = () => {
   users = [];
 };
 
-const getAllUsers = function () {
+const getAll = () => {
   return users;
 };
 
-const getUserById = function (id) {
+const getById = (id) => {
   return users.find((person) => +person.id === +id) || null;
 };
 
-const createUser = function (name) {
+const create = (name) => {
   const user = {
     id: generateId(users),
     name,
@@ -25,12 +25,12 @@ const createUser = function (name) {
   return user;
 };
 
-const removeUser = function (id) {
+const remove = (id) => {
   users = users.filter((person) => +person.id !== +id);
 };
 
-const updateUser = function ({ id, name }) {
-  const user = getUserById(id);
+const update = ({ id, name }) => {
+  const user = getById(id);
 
   Object.assign(user, { name });
 
@@ -38,10 +38,10 @@ const updateUser = function ({ id, name }) {
 };
 
 module.exports = {
-  resetUsers,
-  getAllUsers,
-  getUserById,
-  createUser,
-  removeUser,
-  updateUser,
+  reset,
+  getAll,
+  getById,
+  create,
+  remove,
+  update,
 };

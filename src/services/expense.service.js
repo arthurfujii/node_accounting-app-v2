@@ -2,11 +2,11 @@ const { generateId } = require('../utils/generateId');
 // eslint-disable-next-line prefer-const
 let expenses = [];
 
-const resetExpenses = function () {
+const reset = () => {
   expenses = [];
 };
 
-const getAllExpenses = function (filterParams = {}) {
+const getAll = (filterParams = {}) => {
   const filteringMethods = {
     userId: (userId, expense) => +userId === +expense.userId,
     from: (from, expense) => new Date(expense.spentAt) > new Date(from),
@@ -26,17 +26,10 @@ const getAllExpenses = function (filterParams = {}) {
   );
 };
 
-const getExpenseById = function (id) {
+const getById = (id) => {
   return expenses.find((expense) => +expense.id === +id) || null;
 };
-const createExpense = function (
-  userId,
-  spentAt,
-  title,
-  amount,
-  category,
-  note,
-) {
+const create = (userId, spentAt, title, amount, category, note) => {
   const expense = {
     id: generateId(expenses),
     userId,
@@ -52,12 +45,12 @@ const createExpense = function (
   return expense;
 };
 
-const removeExpense = function (id) {
+const remove = (id) => {
   expenses = expenses.filter((entry) => +entry.id !== +id);
 };
 
-const updateExpense = function (id, param = {}) {
-  const expense = getExpenseById(id);
+const update = (id, param = {}) => {
+  const expense = getById(id);
 
   Object.assign(expense, param);
 
@@ -65,10 +58,10 @@ const updateExpense = function (id, param = {}) {
 };
 
 module.exports = {
-  resetExpenses,
-  getAllExpenses,
-  getExpenseById,
-  createExpense,
-  removeExpense,
-  updateExpense,
+  reset,
+  getAll,
+  getById,
+  create,
+  remove,
+  update,
 };
