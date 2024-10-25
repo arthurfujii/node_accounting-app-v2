@@ -1,34 +1,6 @@
-const { generateId } = require('./../utils/generateId');
+const { generateId } = require('../utils/generateId');
 // eslint-disable-next-line prefer-const
-let expenses = [
-  {
-    id: '0',
-    userId: '0',
-    spentAt: '2020-01',
-    title: 'test expense',
-    amount: '99',
-    category: 'food',
-    note: 'great product',
-  },
-  {
-    id: '1',
-    userId: '1',
-    spentAt: '2024-03',
-    title: 'test expense 1',
-    amount: '100',
-    category: 'food',
-    note: 'must buy product',
-  },
-  {
-    id: '2',
-    userId: '1',
-    spentAt: '2022-12-31',
-    title: 'test expense 2',
-    amount: '100',
-    category: 'cleaning',
-    note: 'need to buy monthly',
-  },
-];
+let expenses = [];
 
 const resetExpenses = function () {
   expenses = [];

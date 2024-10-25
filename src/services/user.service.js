@@ -1,15 +1,6 @@
-const { generateId } = require('./../utils/generateId');
+const { generateId } = require('../utils/generateId');
 // eslint-disable-next-line prefer-const
-let users = [
-  {
-    id: '0',
-    name: 'jane',
-  },
-  {
-    id: '1',
-    name: 'john',
-  },
-];
+let users = [];
 
 const resetUsers = function () {
   users = [];
@@ -20,7 +11,7 @@ const getAllUsers = function () {
 };
 
 const getUserById = function (id) {
-  return users.find((person) => person.id === +id) || null;
+  return users.find((person) => +person.id === +id) || null;
 };
 
 const createUser = function (name) {
@@ -35,7 +26,7 @@ const createUser = function (name) {
 };
 
 const removeUser = function (id) {
-  users = users.filter((person) => person.id !== +id);
+  users = users.filter((person) => +person.id !== +id);
 };
 
 const updateUser = function ({ id, name }) {
